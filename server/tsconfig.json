@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": ".build",
+    "sourceMap": true,
+    "target": "es5",
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "moduleResolution": "node",
+    "lib": ["es2015"],
+    "rootDir": "./"
+  },
+  "include": ["./*.js", "src/**/*.ts", "test/**/*.ts", "./.eslintrc.cjs"]
+}

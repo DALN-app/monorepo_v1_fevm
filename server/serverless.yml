@@ -1,0 +1,40 @@
+service: daln-server
+frameworkVersion: "3"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-plugin-include-dependencies
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:462450903353:table/users"
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi: "*"
+resources:
+  Resources:
+    usersDynamoDBTable: # add these lines
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: address
+            AttributeType: S
+        KeySchema:
+          - AttributeName: address
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
