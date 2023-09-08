@@ -194,6 +194,7 @@ function OverlayOnboarding() {
     () => getPlaidTransactionSync(plaidItemId as string),
     {
       onSuccess: (data) => {
+        console.log("********** Data from Plaid *********", data);
         if (step === OnboardingSteps.FetchingPlaid) {
           setStep(OnboardingSteps.Encryption);
         }
