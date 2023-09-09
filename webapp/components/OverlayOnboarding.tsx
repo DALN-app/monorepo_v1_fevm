@@ -213,6 +213,8 @@ function OverlayOnboarding() {
     applyAccessConditionMutation,
   } = useUploadEncrypted();
 
+  console.log("****** current CID Value:", stepData?.cid);
+
   const mintToken = usePrepareWriteAndWaitTx(
     {
       address: process.env.NEXT_PUBLIC_DALN_CONTRACT_ADDRESS as `0x${string}`,
