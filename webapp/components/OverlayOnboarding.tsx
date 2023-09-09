@@ -90,6 +90,7 @@ const getPlaidTransactionSync = async (itemId: string) => {
   return response.data;
 };
 
+// todo
 function OverlayOnboarding() {
   const { address: userAddress } = useAccount();
   const userBalance = useBalance({
@@ -194,14 +195,15 @@ function OverlayOnboarding() {
     () => getPlaidTransactionSync(plaidItemId as string),
     {
       onSuccess: (data) => {
+        console.log("********** Data from Plaid *********", data);
         if (step === OnboardingSteps.FetchingPlaid) {
-          setStep(OnboardingSteps.Encryption);
+          setStep(OnboardingSteps.Minting);
         }
       },
       enabled:
         !!plaidItemId &&
         (step === OnboardingSteps.FetchingPlaid ||
-          step === OnboardingSteps.Encryption),
+          step === OnboardingSteps.Minting),
     }
   );
 
@@ -466,9 +468,9 @@ function OverlayOnboarding() {
                   {(step === OnboardingSteps.Processing ||
                     step === OnboardingSteps.FetchingPlaid) &&
                     loadingStep}
-                  {step === OnboardingSteps.Encryption && encryptionStep}
+                  {/* {step === OnboardingSteps.Encryption && encryptionStep} */}
                   {step === OnboardingSteps.Minting && mintingStep}
-                  {step === OnboardingSteps.SetAccess && setAccessStep}
+                  {/* {step === OnboardingSteps.SetAccess && setAccessStep} */}
                   {step === OnboardingSteps.MintSuccess && (
                     <Container>
                       <Flex flex={1} justifyContent="center">
