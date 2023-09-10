@@ -90,7 +90,7 @@ const getPlaidTransactionSync = async (itemId: string) => {
   return response.data;
 };
 
-// todo
+
 function OverlayOnboarding() {
   const { address: userAddress } = useAccount();
   const userBalance = useBalance({
@@ -214,20 +214,23 @@ function OverlayOnboarding() {
     applyAccessConditionMutation,
   } = useUploadEncrypted();
 
+  // using a static cid here for safeMint
+  const testCid = "QmcqAVuHr7ofgaUvxHUNUYbpvrcM6yNXdWpxVgwrWMHLck";
+
   const mintToken = usePrepareWriteAndWaitTx(
     {
       address: process.env.NEXT_PUBLIC_DALN_CONTRACT_ADDRESS as `0x${string}`,
       abi: basicFevmDalnABI,
       functionName: "safeMint",
-      args: [stepData?.cid || ""],
+      args: [testCid || ""],
       enabled:
         !!process.env.NEXT_PUBLIC_DALN_CONTRACT_ADDRESS &&
         !!userAddress &&
-        !!stepData?.cid,
+        !!testCid,
     },
     {
       onTxConfirmed: () => {
-        setStep(OnboardingSteps.SetAccess);
+        setStep(OnboardingSteps.MintSuccess);
       },
     }
   );
