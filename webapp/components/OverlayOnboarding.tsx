@@ -90,6 +90,7 @@ const getPlaidTransactionSync = async (itemId: string) => {
   return response.data;
 };
 
+
 function OverlayOnboarding() {
   const { address: userAddress } = useAccount();
   const userBalance = useBalance({
@@ -196,13 +197,13 @@ function OverlayOnboarding() {
       onSuccess: (data) => {
         console.log("********** Data from Plaid *********", data);
         if (step === OnboardingSteps.FetchingPlaid) {
-          setStep(OnboardingSteps.Encryption);
+          setStep(OnboardingSteps.Minting);
         }
       },
       enabled:
         !!plaidItemId &&
         (step === OnboardingSteps.FetchingPlaid ||
-          step === OnboardingSteps.Encryption),
+          step === OnboardingSteps.Minting),
     }
   );
 
@@ -213,22 +214,23 @@ function OverlayOnboarding() {
     applyAccessConditionMutation,
   } = useUploadEncrypted();
 
-  console.log("****** current CID Value:", stepData?.cid);
+  // using a static cid here for safeMint
+  const testCid = "QmcqAVuHr7ofgaUvxHUNUYbpvrcM6yNXdWpxVgwrWMHLck";
 
   const mintToken = usePrepareWriteAndWaitTx(
     {
       address: process.env.NEXT_PUBLIC_DALN_CONTRACT_ADDRESS as `0x${string}`,
       abi: basicFevmDalnABI,
       functionName: "safeMint",
-      args: [stepData?.cid || ""],
+      args: [testCid || ""],
       enabled:
         !!process.env.NEXT_PUBLIC_DALN_CONTRACT_ADDRESS &&
         !!userAddress &&
-        !!stepData?.cid,
+        !!testCid,
     },
     {
       onTxConfirmed: () => {
-        setStep(OnboardingSteps.SetAccess);
+        setStep(OnboardingSteps.MintSuccess);
       },
     }
   );
@@ -469,9 +471,9 @@ function OverlayOnboarding() {
                   {(step === OnboardingSteps.Processing ||
                     step === OnboardingSteps.FetchingPlaid) &&
                     loadingStep}
-                  {step === OnboardingSteps.Encryption && encryptionStep}
+                  {/* {step === OnboardingSteps.Encryption && encryptionStep} */}
                   {step === OnboardingSteps.Minting && mintingStep}
-                  {step === OnboardingSteps.SetAccess && setAccessStep}
+                  {/* {step === OnboardingSteps.SetAccess && setAccessStep} */}
                   {step === OnboardingSteps.MintSuccess && (
                     <Container>
                       <Flex flex={1} justifyContent="center">
