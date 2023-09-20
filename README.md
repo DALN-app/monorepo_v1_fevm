@@ -33,4 +33,3 @@ When you make changes to the contracts, you will need to generate new typescript
 
 `npm run web:dev`
 
-## tttt

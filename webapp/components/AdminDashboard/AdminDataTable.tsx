@@ -131,9 +131,7 @@ const columns = [
           <Button
             as={Link}
             isExternal
-            href={`https://files.lighthouse.storage/viewFile/${item.row.getValue(
-              "cid"
-            )}`}
+            href={`https://decrypt.mesh3.network/${item.row.getValue("cid")}`}
             rightIcon={<IconExternalLink size={16} />}
             size="sm"
             variant="link"

@@ -194,6 +194,7 @@ function OverlayOnboarding() {
     () => getPlaidTransactionSync(plaidItemId as string),
     {
       onSuccess: (data) => {
+        console.log("********** Data from Plaid *********", data);
         if (step === OnboardingSteps.FetchingPlaid) {
           setStep(OnboardingSteps.Encryption);
         }
@@ -211,6 +212,8 @@ function OverlayOnboarding() {
     uploadEncryptedMutation,
     applyAccessConditionMutation,
   } = useUploadEncrypted();
+
+  console.log("****** current CID Value:", stepData?.cid);
 
   const mintToken = usePrepareWriteAndWaitTx(
     {
